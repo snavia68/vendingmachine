@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+		 
+	<ui:define name="content">	
+			<h:form id="formDialog">
+				<p:messages id="msg" />
+				<p:growl id="men"/>
+					<p:panel id="panelProducto" header="Producto">							
+						<h:panelGrid columns="2" id="panelGrid" >
+												 	<h:outputText id="msgIdProducto" value="IdProducto"/>
+						 	<p:inputText id="txtIdProducto" binding="#{productoView.txtIdProducto}">
+						 		<p:ajax update="panelProducto,msg,panelBotones" listener="#{productoView.listener_txtId}"/>
+						 	</p:inputText>	
+																		
+													<h:outputText id="msgCantidad" value=" Cantidad"/>
+							<p:inputText id="txtCantidad" disabled="true" binding="#{productoView.txtCantidad}"/>
+													<h:outputText id="msgDescripcion" value=" Descripcion"/>
+							<p:inputText id="txtDescripcion" disabled="true" binding="#{productoView.txtDescripcion}"/>
+													<h:outputText id="msgNombre" value=" Nombre"/>
+							<p:inputText id="txtNombre" disabled="true" binding="#{productoView.txtNombre}"/>
+													<h:outputText id="msgValor" value=" Valor"/>
+							<p:inputText id="txtValor" disabled="true" binding="#{productoView.txtValor}"/>
+													<h:outputText id="msgIdDisplay_Display" value=" IdDisplay_Display"/>
+							<p:inputText id="txtIdDisplay_Display" disabled="true" binding="#{productoView.txtIdDisplay_Display}"/>
+												
+										   </h:panelGrid>
+				</p:panel>
+	   			<p:panel id="panelBotones">
+					<div align="center">					
+						<p:commandButton id="btnSave" binding="#{productoView.btnSave}" disabled="true" value="Save" action="#{productoView.action_save()}" update="panelProducto,msg,panelBotones" />
+						<p:commandButton id="btnDelete" binding="#{productoView.btnDelete}" disabled="true" value="Delete" action="#{productoView.action_delete_master()}" onclick="if(!confirm('Do you really want to delete this Entry?')){return false;}" update="panelProducto,msg,panelBotones" />
+						<p:commandButton id="btnClear" value="Clear" action="#{productoView.action_clear()}" update="panelProducto,msg,panelBotones" />
+					</div>
+				</p:panel>			
+			</h:form>
+  </ui:define>
+</ui:composition>

@@ -1,0 +1,115 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+		 
+	<ui:define name="content">		
+
+		  			<h:form id="frm">								  		
+						
+						<p:panel id="panelDataTableProducto" header="Máquina expendedora">
+							<p:growl id="men"/>				
+							<p:dataTable value="#{vendingMachineView.data}" var="producto"
+								paginator="true" rows="5" style="center">
+										
+										<p:column filterBy="#{producto.idDisplay}" sortBy="#{producto.idDisplay}" >
+										 <f:facet name="header">
+										<h:outputText value="Codigo"/>
+										</f:facet>
+										 <h:outputText value="#{producto.idDisplay_Display}"/>
+										</p:column>   
+																																
+										<p:column filterBy="#{producto.cantidad}" sortBy="#{producto.cantidad}" >
+										 <f:facet name="header">
+										<h:outputText value="Cantidad"/>
+										</f:facet>
+										 <h:outputText value="#{producto.cantidad}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{producto.descripcion}" sortBy="#{producto.descripcion}" >
+										 <f:facet name="header">
+										<h:outputText value="Descripcion"/>
+										</f:facet>
+										 <h:outputText value="#{producto.descripcion}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{producto.nombre}" sortBy="#{producto.nombre}" >
+										 <f:facet name="header">
+										<h:outputText value="Nombre"/>
+										</f:facet>
+										 <h:outputText value="#{producto.nombre}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{producto.valor}" sortBy="#{producto.valor}" >
+										 <f:facet name="header">
+										<h:outputText value="Valor"/>
+										</f:facet>
+										 <h:outputText value="#{producto.valor}"/>
+										</p:column>							                    
+							</p:dataTable>	
+						</p:panel>
+						<p:panel id="panelMonedas" header="Venta de productos">
+						
+							
+						<div align="center">
+						<p:inputText id="txtCodigoProducto"
+								binding="#{vendingMachineView.txtCodigoProducto}"
+								placeholder="Ingrese el código del producto:  "
+								style="width:220px; height:30px;" />
+								
+								<p:commandButton id="btnComprar" value="Comprar" update="frm" style="width:120px; height:30px;" action="#{vendingMachineView.compra_producto}" />
+								<p:outputLabel value="Saldo: "/>
+								<p:outputLabel binding="#{vendingMachineView.saldoCompra}"/>
+								<br />
+								<br />
+								<div align="center">					
+									<p:commandButton id="btnCien" binding="#{vendingMachineView.btnCien}" value="100" icon="fa-dollar" action="#{vendingMachineView.sumar_saldo(100)}" update="panelMonedas"/>
+									<p:commandButton id="btnDocientos" binding="#{vendingMachineView.btnDocientos}" value="200" icon="fa-money" action="#{vendingMachineView.sumar_saldo(200)}" update="panelMonedas"/>
+									<p:commandButton id="btnQuinientos" binding="#{vendingMachineView.btnQuinientos}" value="500" icon="fa-money" action="#{vendingMachineView.sumar_saldo(500)}" update="panelMonedas"/>
+									<p:commandButton id="btnMil" binding="#{vendingMachineView.btnMil}" value="1000" icon="fa-money" action="#{vendingMachineView.sumar_saldo(1000)}" update="panelMonedas"/>
+								</div>
+							</div>	
+						</p:panel>
+						
+						<p:panel id="panelProductos" header="Carga de productos" binding="#{vendingMachineView.panelProductos}" visible="false">
+						<div align="center">
+							<p:inputText id="txtCantidad"
+								binding="#{vendingMachineView.txtCantidad}"
+								placeholder="Cantidad: "
+								style="width:220px; height:30px;" />
+							<br />
+							<br />
+							<p:inputText id="txtNombre"
+								binding="#{vendingMachineView.txtNombre}"
+								placeholder="Nombre del producto: "
+								style="width:220px; height:30px;" />
+							<br />
+							<br />
+							<p:inputText id="txtDescripcion"
+								binding="#{vendingMachineView.txtDescripcion}"
+								placeholder="Descripción del producto:"
+								style="width:220px; height:30px;" />
+							<br />
+							<br />
+							<p:inputText id="txtValor"
+								binding="#{vendingMachineView.txtValor}"
+								placeholder="Valor del producto: "
+								style="width:220px; height:30px;" />
+							<br />
+							<br />
+						</div>
+							<div align="center">
+								<div align="center">					
+									<p:commandButton id="btnSave" binding="#{vendingMachineView.btnSave}" action="#{vendingMachineView.action_create}" value="Crear" update="frm" />
+									<p:commandButton id="btnClear" value="Clear"  update="frm" />
+								</div>
+							</div>			
+						</p:panel>			
+						
+						
+		   			</h:form>
+	</ui:define>
+</ui:composition>
+

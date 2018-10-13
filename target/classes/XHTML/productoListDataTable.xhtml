@@ -1,0 +1,116 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+		 
+	<ui:define name="content">		
+
+		  			<h:form id="frm">								  		
+						
+						<p:panel id="panelDataTableProducto" header="ProductoData">
+							<p:growl id="men"/>				
+							<p:dataTable value="#{productoView.data}" var="producto"
+								paginator="true" rows="5">
+																										<p:column filterBy="#{producto.idProducto}" sortBy="#{producto.idProducto}" >
+										 <f:facet name="header">
+										<h:outputText value="idProducto"/>
+										</f:facet>
+										 <h:outputText value="#{producto.idProducto}"/>
+										 </p:column>
+			                    																									
+										<p:column filterBy="#{producto.cantidad}" sortBy="#{producto.cantidad}" >
+										 <f:facet name="header">
+										<h:outputText value="Cantidad"/>
+										</f:facet>
+										 <h:outputText value="#{producto.cantidad}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{producto.descripcion}" sortBy="#{producto.descripcion}" >
+										 <f:facet name="header">
+										<h:outputText value="Descripcion"/>
+										</f:facet>
+										 <h:outputText value="#{producto.descripcion}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{producto.nombre}" sortBy="#{producto.nombre}" >
+										 <f:facet name="header">
+										<h:outputText value="Nombre"/>
+										</f:facet>
+										 <h:outputText value="#{producto.nombre}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{producto.valor}" sortBy="#{producto.valor}" >
+										 <f:facet name="header">
+										<h:outputText value="Valor"/>
+										</f:facet>
+										 <h:outputText value="#{producto.valor}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{producto.idDisplay_Display}" sortBy="#{producto.idDisplay_Display}" >
+										 <f:facet name="header">
+										<h:outputText value="IdDisplay_Display"/>
+										</f:facet>
+										 <h:outputText value="#{producto.idDisplay_Display}"/>
+										</p:column>   
+			                    			                    
+								<p:column headerText="Options">
+									<p:commandButton id="btnEdit" icon="ui-icon-pencil"
+										update=":dialogProducto"
+										actionListener="#{productoView.action_edit}">
+										<f:attribute name="selectedProducto" value="#{producto}" />
+									</p:commandButton>
+									<p:commandButton id="btnDelete"									
+										title="Delete" actionListener="#{productoView.action_delete_datatable}"
+										onclick="if(!confirm('Do you really want to delete this Entry?')){return false;}"
+										icon="ui-icon-trash" update="@form">
+										<f:attribute name="selectedProducto" value="#{producto}" />
+									</p:commandButton>
+								</p:column>									                    
+							</p:dataTable>	
+						</p:panel>
+						<p:panel id="panelBoton">
+							<div align="center">
+								<p:commandButton id="btnNew" value="New"
+									action="#{productoView.action_new()}" update=":dialogProducto" />
+							</div>
+						</p:panel>						
+		   			</h:form>
+					<p:dialog id="dialogProducto" appendTo="@(body)" draggable="true"
+						closable="false" visible="#{productoView.showDialog}" resizable="false"
+						modal="true" width="500">
+						<h:form id="formDialog">
+							<p:messages id="msg" />
+							<p:panel id="panelProducto" header="Producto">							
+							    <h:panelGrid columns="2" id="panelGrid" >
+																		 <h:outputText id="msgIdProducto" value="IdProducto"/>
+									 <p:inputText id="txtIdProducto" binding="#{productoView.txtIdProducto}">
+									 <p:ajax update=":dialogProducto" listener="#{productoView.listener_txtId}"/>
+									 </p:inputText>	
+																											
+																		<h:outputText id="msgCantidad" value=" Cantidad"/>
+									<p:inputText id="txtCantidad" disabled="true" binding="#{productoView.txtCantidad}"/>
+																		<h:outputText id="msgDescripcion" value=" Descripcion"/>
+									<p:inputText id="txtDescripcion" disabled="true" binding="#{productoView.txtDescripcion}"/>
+																		<h:outputText id="msgNombre" value=" Nombre"/>
+									<p:inputText id="txtNombre" disabled="true" binding="#{productoView.txtNombre}"/>
+																		<h:outputText id="msgValor" value=" Valor"/>
+									<p:inputText id="txtValor" disabled="true" binding="#{productoView.txtValor}"/>
+																		<h:outputText id="msgIdDisplay_Display" value=" IdDisplay_Display"/>
+									<p:inputText id="txtIdDisplay_Display" disabled="true" binding="#{productoView.txtIdDisplay_Display}"/>
+																		
+																    </h:panelGrid>
+							</p:panel>						   
+							<p:panel id="panelBotones">
+								<div align="center">					
+									<p:commandButton id="btnSave" binding="#{productoView.btnSave}" value="Save" action="#{productoView.action_save()}" update=":dialogProducto :frm:panelDataTableProducto" />
+									<p:commandButton id="btnClear" value="Clear" action="#{productoView.action_clear()}" update=":dialogProducto" />
+									<p:commandButton id="btnExit" value="Exit" action="#{productoView.action_closeDialog()}" update=":dialogProducto" />
+								</div>
+				</p:panel>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+

@@ -1,0 +1,33 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+		 
+	<ui:define name="content">	
+			<h:form id="formDialog">
+				<p:messages id="msg" />
+				<p:growl id="men"/>
+					<p:panel id="panelDisplay" header="Display">							
+						<h:panelGrid columns="2" id="panelGrid" >
+												 	<h:outputText id="msgIdDisplay" value="IdDisplay"/>
+						 	<p:inputText id="txtIdDisplay" binding="#{displayView.txtIdDisplay}">
+						 		<p:ajax update="panelDisplay,msg,panelBotones" listener="#{displayView.listener_txtId}"/>
+						 	</p:inputText>	
+																		
+													<h:outputText id="msgIdProducto" value=" IdProducto"/>
+							<p:inputText id="txtIdProducto" disabled="true" binding="#{displayView.txtIdProducto}"/>
+												
+										   </h:panelGrid>
+				</p:panel>
+	   			<p:panel id="panelBotones">
+					<div align="center">					
+						<p:commandButton id="btnSave" binding="#{displayView.btnSave}" disabled="true" value="Save" action="#{displayView.action_save()}" update="panelDisplay,msg,panelBotones" />
+						<p:commandButton id="btnDelete" binding="#{displayView.btnDelete}" disabled="true" value="Delete" action="#{displayView.action_delete_master()}" onclick="if(!confirm('Do you really want to delete this Entry?')){return false;}" update="panelDisplay,msg,panelBotones" />
+						<p:commandButton id="btnClear" value="Clear" action="#{displayView.action_clear()}" update="panelDisplay,msg,panelBotones" />
+					</div>
+				</p:panel>			
+			</h:form>
+  </ui:define>
+</ui:composition>
