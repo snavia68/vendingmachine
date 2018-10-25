@@ -18,6 +18,7 @@ import co.edu.usbcali.vendingmachine.model.Display;
 import co.edu.usbcali.vendingmachine.model.Producto;
 import co.edu.usbcali.vendingmachine.model.dto.ProductoDTO;
 import co.edu.usbcali.vendingmachine.presentation.businessDelegate.IBusinessDelegatorView;
+import co.edu.usbcali.vendingmachine.utilities.FacesUtils;
 
 @ManagedBean
 @ViewScoped
@@ -28,6 +29,8 @@ public class VendingMachineView {
 	private List<Producto> losProductos;
 	
 	private Panel panelProductos;
+	
+	static Integer acumulado = 0;
 	
 	private InputText txtCantidad;
 	private InputText txtNombre;
@@ -110,6 +113,16 @@ public class VendingMachineView {
     	
     	Integer cantidadProducto = producto.getCantidad()-1;
     	producto.setCantidad(cantidadProducto);
+    	
+     	if (acumulado == 0) {
+     		VendingMachineView.acumulado = producto.getValor();
+     		FacesUtils.putinSession("acumulado", acumulado);
+		} else {
+			Integer sumarAcumulado = Integer.parseInt(FacesUtils.getfromSession("acumulado").toString());
+			sumarAcumulado = sumarAcumulado + producto.getValor();
+			FacesUtils.putinSession("acumulado", sumarAcumulado);
+		}
+    	
     	
     	businessDelegatorView.updateProducto(producto);
     	
